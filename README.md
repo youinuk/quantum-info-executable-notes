@@ -1,67 +1,113 @@
-# Quantum Information Executable Notes — starter
+# From Bits to Qubits — Manuscript Starter
 
-This is a manuscript starter for:
+This repository contains the LaTeX manuscript for:
 
 **From Bits to Qubits: An Executable Introduction to Quantum Information**
 
-Primary readers:
+The companion app is maintained separately:
 
-- high-school students,
-- undergraduates,
-- general readers.
+<https://github.com/youinuk/quantum-info-learning-lab>
 
-Prerequisite: high-school mathematics.
+## Current manuscript status
 
-## Important baseline rule
+This starter is now aligned with:
 
-The public companion repository currently exposes Levels 0--8, while Levels 9--12
-were reported as local work awaiting commit when this starter was generated.
-After that commit, replace all:
+- app baseline commit: `9f7ef8ecc3853ed966a30e07775ed6e4370e4ffa`
+- Level 9--12 addition commit: `b42f0ea729608f7e5b7325d62e4ba6c70b9b8dfa`
+- current writing focus: Chapter 6, **Phase: Information Hidden from a Direct Measurement**
 
-- `SET_AFTER_LEVEL12_COMMIT`
-- `TBD_AFTER_COMMIT`
+## Recommended Overleaf start
 
-with exact paths, function names, tests, and the full commit hash.
+For the current writing phase, use the Chapter 6 project rather than uploading the
+entire future book.
 
-## Main files
+Upload this minimal structure to Overleaf:
 
-- `main_notes.tex`: full lecture-notes/book structure.
-- `main_review.tex`: shorter tutorial-manuscript structure.
-- `mapping/curriculum_map.yaml`: app Level to book chapter map.
-- `mapping/experiment_registry.yaml`: stable experiment identifiers.
-- `figures/figure_manifest.yaml`: publication figure plan.
-- `docs/mathematical_conventions.md`: normative conventions.
-- `chapters/ch06_phase.tex`: first pilot chapter with initial substantive material.
-
-## Build verification
-
-Both `main_notes.tex` and `main_review.tex` were successfully compiled with pdfLaTeX when this starter was generated. The bibliography commands remain commented until the first verified citations are added.
-
-## Overleaf
-
-1. Upload the entire zip to a new Overleaf project.
-2. Set the main document to `main_notes.tex` or `main_review.tex`.
-3. Use pdfLaTeX initially.
-4. Replace `AUTHOR NAME`.
-5. Replace the app commit placeholder immediately after the Level 12 commit.
-
-## Local validation
-
-```bash
-python scripts/validate_mapping.py
-pytest -q
+```text
+main_ch06.tex
+preamble/
+chapters/ch06_phase.tex
+figures/generated/
+bibliography/references.bib
 ```
 
-Optional local LaTeX build:
+Set the main document to:
 
-```bash
-latexmk -pdf main_notes.tex
-latexmk -pdf main_review.tex
+```text
+main_ch06.tex
 ```
 
-## Separation of responsibilities
+Use pdfLaTeX first.
 
-- The app provides short explanations, interaction, and immediate feedback.
-- The manuscript provides logical connections, derivations, limitations, references,
-  misconception analysis, and exercises.
-- SDK Labs provide optional Qiskit/Cirq syntax and external execution.
+## Included Chapter 6 update
+
+The integrated Chapter 6 file now includes:
+
+- figure blocks inserted in the body,
+- natural in-text references to each figure,
+- revised explanation of amplitudes, relative sign, phase, and interference,
+- misconception boxes,
+- additional exercises,
+- instructor/revision notes,
+- initial BibTeX citations.
+
+Main files:
+
+```text
+chapters/ch06_phase.tex
+figures/generated/fig_exp_i01_hh_hzh_result.pdf
+figures/generated/fig_exp_i02_amplitude_table.pdf
+figures/generated/fig_ch06_recombination_summary.pdf
+figures/generated/fig_exp_i03_phase_sweep.pdf
+bibliography/references.bib
+```
+
+## Longer-term structure
+
+The full manuscript will later include:
+
+```text
+main_notes.tex
+main_review.tex
+frontmatter/
+chapters/
+appendices/
+sdk_labs/
+mapping/
+figures/
+bibliography/
+```
+
+For now, keep the Overleaf project small and chapter-focused.
+
+## Suggested workflow
+
+1. Commit the current repository state.
+2. Copy this update pack into the repository root.
+3. Allow the following files to overwrite older versions:
+
+```text
+chapters/ch06_phase.tex
+bibliography/references.bib
+README.md
+```
+
+4. Add the new figure files under:
+
+```text
+figures/generated/
+```
+
+5. Compile `main_ch06.tex`.
+6. Commit the update:
+
+```bash
+git add .
+git commit -m "Integrate Chapter 6 figures, references, and exercises"
+```
+
+## Note on figures
+
+The current Chapter 6 figures are manuscript-draft figures. Before an arXiv or
+publication release, regenerate the figures from the fixed app baseline and record
+the script, seed, and output files in the figure manifest.
