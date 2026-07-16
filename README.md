@@ -8,20 +8,26 @@ The companion app is maintained separately:
 
 <https://github.com/youinuk/quantum-info-learning-lab>
 
-## Current manuscript status
+## Current writing focus
 
-This starter is now aligned with:
+The current active writing target is:
 
-- app baseline commit: `9f7ef8ecc3853ed966a30e07775ed6e4370e4ffa`
-- Level 9--12 addition commit: `b42f0ea729608f7e5b7325d62e4ba6c70b9b8dfa`
-- current writing focus: Chapter 6, **Phase: Information Hidden from a Direct Measurement**
+```text
+Chapter 6 — Phase: Information Hidden from a Direct Measurement
+```
 
-## Recommended Overleaf start
+This update integrates:
 
-For the current writing phase, use the Chapter 6 project rather than uploading the
-entire future book.
+- conceptual figures,
+- LaTeX tables,
+- natural figure references in the body,
+- subsection-level quick checks,
+- end-of-chapter exercises,
+- initial bibliography entries.
 
-Upload this minimal structure to Overleaf:
+## Recommended Overleaf project
+
+For now, use a small Chapter 6 project in Overleaf:
 
 ```text
 main_ch06.tex
@@ -31,7 +37,7 @@ figures/generated/
 bibliography/references.bib
 ```
 
-Set the main document to:
+Set the Overleaf main document to:
 
 ```text
 main_ch06.tex
@@ -39,52 +45,13 @@ main_ch06.tex
 
 Use pdfLaTeX first.
 
-## Included Chapter 6 update
+## Public-facing note
 
-The integrated Chapter 6 file now includes:
+Internal experiment IDs such as `EXP-I01` and commit hashes should not be placed in the learner-facing chapter text. They belong in mapping files, reproducibility notes, or instructor/developer documentation.
 
-- figure blocks inserted in the body,
-- natural in-text references to each figure,
-- revised explanation of amplitudes, relative sign, phase, and interference,
-- misconception boxes,
-- additional exercises,
-- instructor/revision notes,
-- initial BibTeX citations.
+## File replacement
 
-Main files:
-
-```text
-chapters/ch06_phase.tex
-figures/generated/fig_exp_i01_hh_hzh_result.pdf
-figures/generated/fig_exp_i02_amplitude_table.pdf
-figures/generated/fig_ch06_recombination_summary.pdf
-figures/generated/fig_exp_i03_phase_sweep.pdf
-bibliography/references.bib
-```
-
-## Longer-term structure
-
-The full manuscript will later include:
-
-```text
-main_notes.tex
-main_review.tex
-frontmatter/
-chapters/
-appendices/
-sdk_labs/
-mapping/
-figures/
-bibliography/
-```
-
-For now, keep the Overleaf project small and chapter-focused.
-
-## Suggested workflow
-
-1. Commit the current repository state.
-2. Copy this update pack into the repository root.
-3. Allow the following files to overwrite older versions:
+This update is intended to overwrite:
 
 ```text
 chapters/ch06_phase.tex
@@ -92,22 +59,11 @@ bibliography/references.bib
 README.md
 ```
 
-4. Add the new figure files under:
+It also adds or updates:
 
 ```text
 figures/generated/
+docs/INTERNAL_DEVELOPMENT.md
+docs/CH06_REPRODUCIBILITY_MAPPING.md
+main_ch06.tex
 ```
-
-5. Compile `main_ch06.tex`.
-6. Commit the update:
-
-```bash
-git add .
-git commit -m "Integrate Chapter 6 figures, references, and exercises"
-```
-
-## Note on figures
-
-The current Chapter 6 figures are manuscript-draft figures. Before an arXiv or
-publication release, regenerate the figures from the fixed app baseline and record
-the script, seed, and output files in the figure manifest.
