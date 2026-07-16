@@ -1,5 +1,8 @@
 __pycache__/
 .pytest_cache/
+.DS_Store
+
+# LaTeX build products
 *.aux
 *.bbl
 *.bcf
@@ -14,4 +17,7 @@ __pycache__/
 *.lof
 *.lot
 *.pdf
-.DS_Store
+
+# Publication figures are source assets and must be tracked.
+!figures/generated/*.pdf
+figures/generated/*.png

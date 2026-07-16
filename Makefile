@@ -1,4 +1,4 @@
-.PHONY: validate test notes review clean
+.PHONY: validate test book review chapter06 clean
 
 validate:
 	python scripts/validate_mapping.py
@@ -6,12 +6,16 @@ validate:
 test:
 	pytest -q
 
-notes:
-	latexmk -pdf main_notes.tex
+book:
+	latexmk -pdf main.tex
 
 review:
-	latexmk -pdf main_review.tex
+	latexmk -pdf editions/review.tex
+
+chapter06:
+	latexmk -pdf editions/chapter06.tex
 
 clean:
-	latexmk -C main_notes.tex
-	latexmk -C main_review.tex
+	latexmk -C main.tex
+	latexmk -C editions/review.tex
+	latexmk -C editions/chapter06.tex

@@ -1,7 +1,0 @@
-priority,figure_id,experiment_id,chapter,source_function,output_file,seed,notes
-1,FIG-I01,EXP-I01,ch06,apply_single_qubit_gate,figures/generated/fig_exp_i01_hh_hzh.pdf,deterministic,H-H vs H-Z-H state/probability comparison
-1,FIG-I02,EXP-I02,ch06,checked_formula_values,figures/generated/fig_exp_i02_amplitude_table.pdf,deterministic,Amplitude sign table for |+> and |->
-1,FIG-I03,EXP-I03,ch06,simulate_phase_interference,figures/generated/fig_exp_i03_phase_sweep.pdf,20260712,0/90/180/270 degree bright/dark probabilities
-2,FIG-ENT01,EXP-ENT01,ch09,simulate_two_basis_correlations,figures/generated/fig_exp_ent01_basis_compare.pdf,20260712,Product/classical mixture/Bell in Z and X bases
-3,FIG-ALG01,EXP-ALG01,ch11,run_deutsch_one_bit,figures/generated/fig_exp_alg01_deutsch_stages.pdf,deterministic,Deutsch stage probabilities
-4,FIG-STAT01,EXP-STAT01,ch02,simulate_measurement_series,figures/generated/fig_exp_stat01_shot_comparison.pdf,20260712,10/100/1000 shot spread

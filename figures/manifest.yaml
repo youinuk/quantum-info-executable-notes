@@ -1,0 +1,69 @@
+schema_version: 0.2.0
+policy:
+  source_of_truth: Numerical values come from tested functions, never hand-entered
+    LaTeX values.
+  preferred_formats:
+  - PDF
+  - SVG
+  raster_exception: PNG only for screenshots or unavoidable raster material.
+  label_language: English
+figures:
+- id: FIG-CH06-01
+  chapter: ch06
+  experiment_ids:
+  - EXP-I01
+  file: figures/generated/fig_ch06_hidden_phase_concept.pdf
+  kind: conceptual
+  status: draft
+  source: manuscript-generated
+- id: FIG-CH06-02
+  chapter: ch06
+  experiment_ids:
+  - EXP-I01
+  file: figures/generated/fig_ch06_recombination_flow.pdf
+  kind: conceptual
+  status: draft
+  source: manuscript-generated
+- id: FIG-CH06-03
+  chapter: ch06
+  experiment_ids:
+  - EXP-I03
+  file: figures/generated/fig_ch06_phase_sweep.pdf
+  kind: simulation-derived
+  status: draft
+  source_function: core.simulator.simulate_phase_interference
+  seed: null
+- id: FIG-CH06-04
+  chapter: ch06
+  experiment_ids: []
+  file: figures/generated/fig_ch06_wave_analogy_limits.pdf
+  kind: conceptual
+  status: draft
+  source: manuscript-generated
+- id: FIG-ENT01
+  chapter: ch09
+  experiment_ids:
+  - EXP-ENT01
+  file: figures/generated/fig_exp_ent01_basis_compare.pdf
+  kind: simulation-derived
+  status: planned
+  source_function: core.simulator.simulate_two_basis_correlations
+  seed: 20260712
+- id: FIG-ALG01
+  chapter: ch11
+  experiment_ids:
+  - EXP-ALG01
+  file: figures/generated/fig_exp_alg01_deutsch_stages.pdf
+  kind: simulation-derived
+  status: planned
+  source_function: core.simulator.run_deutsch_one_bit
+  seed: null
+- id: FIG-STAT01
+  chapter: ch02
+  experiment_ids:
+  - EXP-STAT01
+  file: figures/generated/fig_exp_stat01_shot_comparison.pdf
+  kind: simulation-derived
+  status: planned
+  source_function: core.simulator.simulate_measurement_series
+  seed: 20260712

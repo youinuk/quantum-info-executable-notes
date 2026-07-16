@@ -1,4 +1,4 @@
-schema_version: 0.3.0
+schema_version: 0.4.0
 app_baseline_commit: 9f7ef8ecc3853ed966a30e07775ed6e4370e4ffa
 level9_12_addition_commit: b42f0ea729608f7e5b7325d62e4ba6c70b9b8dfa
 basis_order:
@@ -17,8 +17,8 @@ experiments:
   - ch02
   code_binding:
   - core.simulator.simulate_bit_trials
-  figure_targets:
-  - fig_exp_c01_sampling.pdf
+  outputs:
+  - figures/generated/fig_exp_c01_sampling.pdf
 - id: EXP-Q01
   title: Qubit probability and one-shot measurement
   status: public_main
@@ -29,8 +29,30 @@ experiments:
   code_binding:
   - core.simulator.QubitState
   - core.simulator.basis_state
-  figure_targets:
-  - fig_exp_q01_state_probability.pdf
+  outputs:
+  - figures/generated/fig_exp_q01_state_probability.pdf
+- id: EXP-Q02
+  title: Repeated state preparation
+  status: public_main
+  levels:
+  - L02
+  chapters:
+  - ch04
+  code_binding:
+  - pages/03_level2_measurement.py
+  outputs:
+  - figures/generated/fig_exp_q02_repeated_preparation.pdf
+- id: EXP-M01
+  title: Immediate remeasurement in the same basis
+  status: public_main
+  levels:
+  - L02
+  chapters:
+  - ch04
+  code_binding:
+  - pages/03_level2_measurement.py
+  outputs:
+  - figures/generated/fig_exp_m01_remeasurement.pdf
 - id: EXP-G01
   title: Single-qubit gate transformations
   status: public_main
@@ -40,8 +62,19 @@ experiments:
   - ch05
   code_binding:
   - core.simulator.apply_single_qubit_gate
-  figure_targets:
-  - fig_exp_g01_gate_transformations.pdf
+  outputs:
+  - figures/generated/fig_exp_g01_gate_transformations.pdf
+- id: EXP-G02
+  title: Two-gate return experiments
+  status: public_main
+  levels:
+  - L03
+  chapters:
+  - ch05
+  code_binding:
+  - core.simulator.apply_single_qubit_gate
+  outputs:
+  - figures/generated/fig_exp_g02_two_gate_returns.pdf
 - id: EXP-I01
   title: H-H versus H-Z-H interference
   status: public_main
@@ -53,8 +86,22 @@ experiments:
   - ch07
   code_binding:
   - core.simulator.apply_single_qubit_gate
-  figure_targets:
-  - fig_exp_i01_hh_hzh.pdf
+  outputs:
+  - figures/generated/fig_ch06_hidden_phase_concept.pdf
+  - figures/generated/fig_ch06_recombination_flow.pdf
+- id: EXP-I02
+  title: Constructive and destructive amplitude comparison
+  status: public_main
+  levels:
+  - L04
+  - L11
+  chapters:
+  - ch06
+  - ch07
+  code_binding:
+  - symbolic derivation
+  outputs:
+  - chapters/ch06_phase.tex#tab:ch06-amplitude-probability
 - id: EXP-I03
   title: Variable phase-difference interference
   status: public_main
@@ -66,8 +113,8 @@ experiments:
   code_binding:
   - core.simulator.simulate_phase_interference
   - pages/13_level11_interference_depth.py
-  figure_targets:
-  - fig_exp_i03_phase_sweep.pdf
+  outputs:
+  - figures/generated/fig_ch06_phase_sweep.pdf
 - id: EXP-TQ01
   title: Independent two-qubit joint distribution
   status: public_main
@@ -77,8 +124,8 @@ experiments:
   - ch08
   code_binding:
   - core.simulator.independent_two_qubit_distribution
-  figure_targets:
-  - fig_exp_tq01_joint_distribution.pdf
+  outputs:
+  - figures/generated/fig_exp_tq01_joint_distribution.pdf
 - id: EXP-ENT01
   title: Product, classical mixture, and Bell state in Z/X bases
   status: public_main
@@ -88,8 +135,8 @@ experiments:
   - ch09
   code_binding:
   - core.simulator.simulate_two_basis_correlations
-  figure_targets:
-  - fig_exp_ent01_basis_compare.pdf
+  outputs:
+  - figures/generated/fig_exp_ent01_basis_compare.pdf
 - id: EXP-ALG01
   title: Deutsch oracle classification
   status: public_main
@@ -100,8 +147,8 @@ experiments:
   - ch11
   code_binding:
   - core.simulator.run_deutsch_one_bit
-  figure_targets:
-  - fig_exp_alg01_deutsch_stages.pdf
+  outputs:
+  - figures/generated/fig_exp_alg01_deutsch_stages.pdf
 - id: EXP-N01
   title: Symmetric outcome-flip noise
   status: public_main
@@ -111,10 +158,24 @@ experiments:
   - ch12
   code_binding:
   - core.simulator.simulate_noisy_bit_measurements
-  figure_targets:
-  - fig_exp_n01_outcome_flip.pdf
+  outputs:
+  - figures/generated/fig_exp_n01_outcome_flip.pdf
 - id: EXP-CIR01
   title: Circuit-card reading
+  status: public_main
+  levels:
+  - L09
+  chapters:
+  - ch05
+  - ch08
+  - ch11
+  code_binding:
+  - core.simulator.simulate_named_circuit
+  - pages/11_level9_circuit_reading.py
+  outputs:
+  - figures/generated/fig_exp_cir01_cards.pdf
+- id: EXP-CIR02
+  title: Measurement-placement comparison
   status: public_main
   levels:
   - L09
@@ -123,8 +184,8 @@ experiments:
   code_binding:
   - core.simulator.simulate_named_circuit
   - pages/11_level9_circuit_reading.py
-  figure_targets:
-  - fig_exp_cir01_cards.pdf
+  outputs:
+  - figures/generated/fig_exp_cir02_measurement_placement.pdf
 - id: EXP-STAT01
   title: 10/100/1000-shot comparison
   status: public_main
@@ -136,8 +197,8 @@ experiments:
   code_binding:
   - core.simulator.simulate_measurement_series
   - pages/12_level10_measurement_statistics.py
-  figure_targets:
-  - fig_exp_stat01_shot_comparison.pdf
+  outputs:
+  - figures/generated/fig_exp_stat01_shot_comparison.pdf
 - id: EXP-STAT02
   title: Sampling and noise comparison
   status: public_main
@@ -149,8 +210,8 @@ experiments:
   code_binding:
   - core.simulator.simulate_measurement_series
   - pages/12_level10_measurement_statistics.py
-  figure_targets:
-  - fig_exp_stat02_noise_sampling.pdf
+  outputs:
+  - figures/generated/fig_exp_stat02_noise_sampling.pdf
 - id: EXP-ENT02
   title: Local data versus paired joint data
   status: public_main
@@ -162,8 +223,8 @@ experiments:
   code_binding:
   - core.simulator.simulate_entanglement_limit
   - pages/14_level12_entanglement_limits.py
-  figure_targets:
-  - fig_exp_ent02_local_joint.pdf
+  outputs:
+  - figures/generated/fig_exp_ent02_local_joint.pdf
 - id: EXP-ENT03
   title: Same-basis and different-basis comparison
   status: public_main
@@ -174,8 +235,8 @@ experiments:
   code_binding:
   - core.simulator.simulate_entanglement_limit
   - pages/14_level12_entanglement_limits.py
-  figure_targets:
-  - fig_exp_ent03_basis_pairs.pdf
+  outputs:
+  - figures/generated/fig_exp_ent03_basis_pairs.pdf
 - id: EXP-EC01
   title: One-bit versus three-bit repetition
   status: planned
@@ -185,8 +246,19 @@ experiments:
   - ch12
   code_binding:
   - TBD_LEVEL13
-  figure_targets:
-  - fig_exp_ec01_repetition.pdf
+  outputs:
+  - figures/generated/fig_exp_ec01_repetition.pdf
+- id: EXP-EC02
+  title: Repetition-code failure at high noise
+  status: planned
+  levels:
+  - L13
+  chapters:
+  - ch12
+  code_binding:
+  - TBD_LEVEL13
+  outputs:
+  - figures/generated/fig_exp_ec02_noise_sweep.pdf
 - id: EXP-SDK01
   title: Bell circuit in Qiskit
   status: planned
@@ -196,5 +268,16 @@ experiments:
   - sdk01
   code_binding:
   - notebooks/sdk_qiskit_bell.ipynb
-  figure_targets:
-  - fig_exp_sdk01_qiskit_bell.pdf
+  outputs:
+  - figures/generated/fig_exp_sdk01_qiskit_bell.pdf
+- id: EXP-SDK02
+  title: Bell circuit in Cirq
+  status: planned
+  levels:
+  - L14
+  chapters:
+  - sdk01
+  code_binding:
+  - notebooks/sdk_cirq_bell.ipynb
+  outputs:
+  - figures/generated/fig_exp_sdk02_cirq_bell.pdf
