@@ -1,0 +1,333 @@
+\chapter{Phase: Information Hidden from a Direct Measurement}
+\label{chap:phase}
+
+\begin{learningobjectives}
+By the end of this chapter, the reader should be able to:
+\begin{itemize}
+  \item distinguish a measurement probability from a probability amplitude;
+  \item explain why two states can give the same direct measurement statistics but behave differently later;
+  \item use the states $\ketplus$ and $\ketminus$ as the first example of relative phase;
+  \item interpret the circuits $H H$ and $H Z H$ as interference experiments;
+  \item explain constructive and destructive interference without saying that a quantum computer simply ``tries all answers'';
+  \item describe, at an introductory level, why phase is useful in quantum algorithms.
+\end{itemize}
+\end{learningobjectives}
+
+\begin{openingquestion}
+Can two quantum states give exactly the same measurement probabilities and still be different states?
+\end{openingquestion}
+
+\paragraph{App and experiment mapping.}
+This chapter mainly uses \applevel{4}, \emph{Interference}, and \applevel{11}, \emph{Interference in Greater Depth}. The primary reproducible experiments are \experiment{EXP-I01}, \experiment{EXP-I02}, and \experiment{EXP-I03}. The chapter also prepares the reader for \experiment{EXP-ALG01}, the Deutsch algorithm.
+
+\section{Try it first: two circuits that look similar}
+
+\begin{tryit}
+Open the interference experiment in the companion app. Compare the following two circuits.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Experiment & Circuit & Expected final result \\
+\midrule
+A & $\ketzero \rightarrow H \rightarrow H \rightarrow \text{measure}$ & mostly 0 \\
+B & $\ketzero \rightarrow H \rightarrow Z \rightarrow H \rightarrow \text{measure}$ & mostly 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Before running the circuits, predict the final result. Then run each circuit many times and compare the output counts.
+\end{tryit}
+
+The two experiments differ by only one middle gate, the $Z$ gate. At first this can feel strange. The $Z$ gate does not change the probabilities of measuring 0 or 1 immediately after it is applied. Yet the final result after the last $H$ gate changes completely.
+
+This is the first important lesson of the chapter.
+
+\begin{coreidea}
+Quantum probabilities are not the whole state. A later gate can reveal information that was hidden from a direct measurement.
+\end{coreidea}
+
+\section{The middle states}
+
+Start with the state $\ketzero$. Applying a Hadamard gate produces
+\begin{equation}
+\ketplus=\frac{\ketzero+\ketone}{\sqrt{2}}.
+\end{equation}
+
+If we measure this state in the usual 0/1 basis, we get 0 with probability $1/2$ and 1 with probability $1/2$.
+
+Now apply a $Z$ gate after the first $H$ gate. The $Z$ gate changes the sign of the $\ketone$ part:
+\begin{equation}
+Z\ketplus=\frac{\ketzero-\ketone}{\sqrt{2}}=\ketminus.
+\end{equation}
+
+If we measure $\ketminus$ directly in the usual 0/1 basis, we again get 0 with probability $1/2$ and 1 with probability $1/2$.
+
+So the two middle states have the same direct measurement probabilities:
+\begin{center}
+\begin{tabular}{lllll}
+\toprule
+State & Amplitude for 0 & Amplitude for 1 & $P(0)$ & $P(1)$ \\
+\midrule
+$\ketplus$ & $+1/\sqrt{2}$ & $+1/\sqrt{2}$ & $1/2$ & $1/2$ \\
+$\ketminus$ & $+1/\sqrt{2}$ & $-1/\sqrt{2}$ & $1/2$ & $1/2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The difference is not in the probabilities. The difference is in the sign of one amplitude.
+
+\section{Amplitude comes before probability}
+
+In a one-qubit state
+\begin{equation}
+\ket{\psi}=\alpha\ketzero+\beta\ketone,
+\end{equation}
+the numbers $\alpha$ and $\beta$ are called amplitudes. To get measurement probabilities in the 0/1 basis, we square their magnitudes:
+\begin{equation}
+P(0)=|\alpha|^2,\qquad P(1)=|\beta|^2.
+\end{equation}
+
+For the sign-based examples in this chapter, the amplitudes are real numbers. This means that the rule is easy to see:
+\begin{equation}
+\left(+\frac{1}{\sqrt{2}}\right)^2=\frac12,
+\qquad
+\left(-\frac{1}{\sqrt{2}}\right)^2=\frac12.
+\end{equation}
+
+The plus sign and the minus sign become the same probability if we measure immediately in the 0/1 basis. But the signs have not disappeared from the state. They can matter when amplitudes are combined again.
+
+\begin{misconception}
+\textbf{Incorrect statement:} ``If two states give the same probabilities, they are the same state.''
+
+\medskip
+\textbf{Correction:} The statement is incomplete. Two states can give the same probabilities in one measurement basis and still differ in their relative phase. The circuits $H H$ and $H Z H$ are a direct counterexample.
+\end{misconception}
+
+\section{Relative sign as the first form of phase}
+
+In this first example, phase appears as a sign.
+
+The state $\ketplus$ has a plus sign between the two parts:
+\begin{equation}
+\ketplus=\frac{\ketzero+\ketone}{\sqrt{2}}.
+\end{equation}
+
+The state $\ketminus$ has a minus sign between the two parts:
+\begin{equation}
+\ketminus=\frac{\ketzero-\ketone}{\sqrt{2}}.
+\end{equation}
+
+The important word is \emph{between}. The difference is not attached to the whole state. It is a relative difference between the $\ketzero$ part and the $\ketone$ part.
+
+A relative sign is the simplest case of a relative phase. Later, the sign will become a direction on a circle. For now, it is enough to remember this:
+
+\begin{coreidea}
+A relative phase is information about how parts of a quantum state are arranged before they are recombined.
+\end{coreidea}
+
+\section{Why the final Hadamard reveals the difference}
+
+The last $H$ gate acts like a recombination step. It takes the two parts of the state and combines them into new output amplitudes.
+
+The Hadamard gate acts as follows:
+\begin{align}
+H\ketzero &= \frac{\ketzero+\ketone}{\sqrt{2}}, \\
+H\ketone &= \frac{\ketzero-\ketone}{\sqrt{2}}.
+\end{align}
+
+It also works in the reverse direction:
+\begin{align}
+H\ketplus &= \ketzero, \\
+H\ketminus &= \ketone.
+\end{align}
+
+So if the middle state is $\ketplus$, the final $H$ sends it to $\ketzero$. If the middle state is $\ketminus$, the final $H$ sends it to $\ketone$.
+
+This is why $H H$ and $H Z H$ give different final answers.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Circuit & Middle state & Final state \\
+\midrule
+$H H$ & $\ketplus$ & $\ketzero$ \\
+$H Z H$ & $\ketminus$ & $\ketone$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Constructive and destructive interference}
+
+The words \emph{constructive interference} and \emph{destructive interference} describe how amplitudes combine.
+
+Constructive interference means that amplitudes add in the same direction and make an outcome more likely.
+
+Destructive interference means that amplitudes add in opposite directions and cancel, making an outcome less likely or impossible.
+
+In the $H H$ circuit, the amplitudes recombine so that the 0 outcome survives and the 1 outcome cancels.
+
+In the $H Z H$ circuit, the relative sign has changed. Now the 0 outcome cancels and the 1 outcome survives.
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+Circuit & Output 0 amplitude & Output 1 amplitude & Result \\
+\midrule
+$H H$ & adds constructively & cancels destructively & 0 \\
+$H Z H$ & cancels destructively & adds constructively & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This is the key point: the final measurement does not simply reveal a hidden classical bit. It reveals the result of a controlled recombination of amplitudes.
+
+\section{A phase sweep: from bright to dark}
+
+Level 11 generalizes the sign example. Instead of only using a plus sign or a minus sign, the app lets the learner choose a phase difference. The app then computes bright and dark output probabilities using
+\begin{equation}
+P(\mathrm{bright})=\frac{1+\cos(\Delta\phi)}{2},
+\qquad
+P(\mathrm{dark})=1-P(\mathrm{bright}).
+\end{equation}
+
+Here $\Delta\phi$ is the phase difference between two paths or two parts of the state. The formula is not the starting point of the lesson. The visual experiment should come first. The formula summarizes the pattern.
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+Phase difference & Bright probability & Dark probability & Interpretation \\
+\midrule
+$0^\circ$ & 1 & 0 & fully bright \\
+$90^\circ$ & $1/2$ & $1/2$ & halfway \\
+$180^\circ$ & 0 & 1 & fully dark \\
+$270^\circ$ & $1/2$ & $1/2$ & halfway again \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This is why phase is often easier to understand through an interactive experiment than through a formula alone. The learner can move from fully bright to fully dark by changing the phase.
+
+\begin{misconception}
+\textbf{Incorrect statement:} ``The dark output means that nothing happened there.''
+
+\medskip
+\textbf{Correction:} The dark output is a result of cancellation. It is not a place where the experiment was ignored. It is an output whose amplitude has been reduced by destructive interference.
+\end{misconception}
+
+\section{What the wave analogy helps with}
+
+It is helpful to compare this with waves on water, sound waves, or light waves. When two waves meet crest-to-crest, they can reinforce each other. When a crest meets a trough, they can cancel.
+
+This analogy is useful because it gives a first picture of interference.
+
+However, the analogy also has limits. A quantum state is not simply a tiny water wave. The amplitudes describe probabilities for measurement outcomes, and the measurement produces one observed result in a single shot. We use the wave analogy only to understand the combining and canceling of amplitudes.
+
+\begin{coreidea}
+The wave analogy helps explain addition and cancellation, but the quantum state is a probability-amplitude description, not an ordinary water wave.
+\end{coreidea}
+
+\section{Why phase matters for algorithms}
+
+Quantum algorithms do not work merely by creating many possibilities. Creating many possibilities is only the beginning. The useful part is arranging amplitudes so that unhelpful outcomes cancel and useful patterns remain.
+
+The Deutsch algorithm in a later chapter is the first complete example. The algorithm marks information about a function as a phase pattern. Then a final Hadamard gate converts that phase pattern into a measurable 0 or 1 on the first qubit.
+
+This is the same lesson as $H H$ versus $H Z H$, but used for a computational question.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Step & Interference chapter & Deutsch chapter \\
+\midrule
+Prepare possibilities & create $\ketplus$ & prepare a superposition of inputs \\
+Mark phase & apply $Z$ & apply the oracle $U_f$ \\
+Recombine & apply final $H$ & apply final $H$ to the first qubit \\
+Measure pattern & get 0 or 1 & classify constant or balanced \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This is a safer way to describe quantum algorithms than saying that the computer ``tries every answer and reads the right one.'' A quantum algorithm must make the amplitudes interfere in a useful way before measurement.
+
+\begin{misconception}
+\textbf{Incorrect statement:} ``A quantum computer gets its power because it tries all answers at once and then prints the correct answer.''
+
+\medskip
+\textbf{Correction:} A useful quantum algorithm must control phases and interference. Measurement gives one outcome, so the circuit must be designed so that useful outcomes become likely and unhelpful outcomes cancel.
+\end{misconception}
+
+\section{Global phase and relative phase}
+
+There is one more distinction that prevents many mistakes.
+
+Multiplying the whole state by the same minus sign does not change the measurement probabilities:
+\begin{equation}
+\ket{\psi}\quad\text{and}\quad -\ket{\psi}
+\end{equation}
+represent the same physical predictions in the simple experiments considered here.
+
+This is called a global phase.
+
+By contrast, changing the sign of only one part changes a relative phase:
+\begin{equation}
+\frac{\ketzero+\ketone}{\sqrt{2}}
+\quad\longrightarrow\quad
+\frac{\ketzero-\ketone}{\sqrt{2}}.
+\end{equation}
+
+The $H Z H$ experiment is sensitive to this relative difference.
+
+\begin{goingdeeper}
+A general one-qubit state can be written as
+\begin{equation}
+\ket{\psi}=\alpha\ketzero+\beta\ketone,
+\end{equation}
+where $\alpha$ and $\beta$ may be complex numbers. After removing an irrelevant global phase, a normalized one-qubit pure state can also be written as
+\begin{equation}
+\ket{\psi}
+=
+\cos\frac{\theta}{2}\ketzero
++
+e^{i\phi}\sin\frac{\theta}{2}\ketone.
+\end{equation}
+The angle $\phi$ is the relative phase. The sign examples in the main text correspond to special cases of this more general expression.
+\end{goingdeeper}
+
+\section{Chapter summary}
+
+The main ideas of this chapter are:
+\begin{itemize}
+  \item A quantum state contains amplitudes, not only probabilities.
+  \item The sign or phase of an amplitude may be invisible in one direct measurement.
+  \item A later gate can recombine amplitudes and reveal a relative phase.
+  \item Constructive interference makes an outcome more likely.
+  \item Destructive interference makes an outcome less likely or impossible.
+  \item Quantum algorithms use phase and interference to make useful measurement outcomes more likely.
+\end{itemize}
+
+The next algorithm chapter will use these ideas in a complete circuit: the Deutsch algorithm.
+
+\section{Check your understanding}
+
+\begin{checkpoint}
+\begin{enumerate}
+  \item Starting from $\ketzero$, what final state do you expect after applying $H$ and then $H$ again?
+  \item Starting from $\ketzero$, what final state do you expect after applying $H$, then $Z$, then $H$?
+  \item Why do $\ketplus$ and $\ketminus$ give the same probabilities in a direct 0/1 measurement?
+  \item In the state $(\ketzero-\ketone)/\sqrt{2}$, where is the relative sign?
+  \item Explain in one or two sentences why the $Z$ gate can matter even though it does not change the immediate 0/1 probabilities of $\ketplus$.
+  \item At phase difference $180^\circ$, which output is bright and which output is dark in the Level 11 model?
+  \item Why is the sentence ``a quantum computer tries all answers and then reads the right one'' misleading?
+\end{enumerate}
+\end{checkpoint}
+
+\section{Further exercises}
+
+\begin{enumerate}
+  \item Verify directly that $H\ketplus=\ketzero$ using the definitions of $H\ketzero$ and $H\ketone$.
+  \item Verify directly that $H\ketminus=\ketone$.
+  \item Use $P(\mathrm{bright})=(1+\cos\Delta\phi)/2$ to compute the bright probability for $0^\circ$, $90^\circ$, $180^\circ$, and $270^\circ$.
+  \item Give an example of two states that differ by a global minus sign. Explain why this does not change the probabilities in a direct measurement.
+  \item Write a short paragraph explaining the difference between constructive interference and destructive interference to a student who has not studied complex numbers.
+\end{enumerate}

@@ -1,0 +1,38 @@
+\documentclass[11pt,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black}
+\setlist{nosep}
+\newcommand{\ket}[1]{\lvert #1\rangle}
+\newcommand{\ketzero}{\ket{0}}
+\newcommand{\ketone}{\ket{1}}
+\newcommand{\ketplus}{\ket{+}}
+\newcommand{\ketminus}{\ket{-}}
+\newcommand{\experiment}[1]{\texttt{#1}}
+\newcommand{\applevel}[1]{\textsf{Level~#1}}
+\newtcolorbox{learningobjectives}{title=Learning objectives,colback=blue!3,colframe=blue!45!black,breakable}
+\newtcolorbox{openingquestion}{title=Opening question,colback=yellow!5,colframe=yellow!45!black,breakable}
+\newtcolorbox{tryit}{title=Try it first,colback=green!4,colframe=green!40!black,breakable}
+\newtcolorbox{coreidea}{title=Core idea,colback=blue!3,colframe=blue!50!black,breakable}
+\newtcolorbox{misconception}{title=Common misconception,colback=red!3,colframe=red!45!black,breakable}
+\newtcolorbox{goingdeeper}{title=Going deeper,colback=black!2,colframe=black!55,breakable}
+\newtcolorbox{checkpoint}{title=Check your understanding,colback=violet!3,colframe=violet!45!black,breakable}
+\numberwithin{equation}{chapter}
+\title{Chapter 6 Draft Preview\\\large Phase: Information Hidden from a Direct Measurement}
+\author{Quantum Info Learning Lab manuscript draft}
+\date{Draft generated 2026-07-12}
+\begin{document}
+\maketitle
+\tableofcontents
+\include{ch06_phase}
+\end{document}

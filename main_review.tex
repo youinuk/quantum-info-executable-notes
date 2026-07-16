@@ -1,0 +1,37 @@
+\documentclass[11pt,openany]{book}
+\input{preamble/packages}
+\input{preamble/commands}
+\input{preamble/environments}
+
+\title{\booktitle\\[4pt]\large Executable Tutorial Manuscript}
+\author{AUTHOR NAME}
+\date{Draft \today}
+
+\begin{document}
+\frontmatter
+\maketitle
+\input{frontmatter/abstract}
+\tableofcontents
+\input{frontmatter/notation}
+
+\mainmatter
+\include{chapters/ch01_bits_information}
+\include{chapters/ch02_one_result_distribution}
+\include{chapters/ch03_qubit_state}
+\include{chapters/ch04_preparation_measurement}
+\include{chapters/ch05_gates_circuits}
+\include{chapters/ch06_phase}
+\include{chapters/ch07_interference_computation}
+\include{chapters/ch08_two_qubits}
+\include{chapters/ch09_correlation_entanglement}
+\include{chapters/ch10_entanglement_limits}
+\include{chapters/ch11_deutsch}
+\include{chapters/ch12_noise_error}
+
+\appendix
+\include{appendices/app_g_reproduction}
+
+% Enable after the first verified citations are added:
+% \bibliographystyle{plainnat}
+% \bibliography{bibliography/references}
+\end{document}

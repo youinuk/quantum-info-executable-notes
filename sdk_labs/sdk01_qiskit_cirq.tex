@@ -1,0 +1,26 @@
+\chapter{From the Learning App to Qiskit and Cirq}
+
+\begin{openingquestion}
+How is a circuit from the learning app expressed in a production quantum SDK?
+\end{openingquestion}
+
+\paragraph{Dependency policy.}
+Qiskit and Cirq are not required by the core learning app. Their notebooks and
+locked environments are maintained separately so that SDK installation and version
+changes do not obscure the conceptual learning path.
+
+\section{Bell circuit in the learning app}
+\experiment{EXP-SDK01} and \experiment{EXP-SDK02} begin with the same conceptual
+circuit: apply $H$ to the first qubit, apply CNOT, and measure both qubits.
+
+\section{Qiskit notebook}
+\placeholder{Link to a versioned Colab or notebook and explain each line alongside
+the corresponding circuit symbol.}
+
+\section{Cirq notebook}
+\placeholder{Provide the same circuit as an optional framework comparison.}
+
+\section{Simulator and hardware results}
+\placeholder{Separate ideal simulation, noisy simulation, and hardware results.
+Record provider, backend, date, calibration context, shot count, and job identifier
+when hardware data are used.}

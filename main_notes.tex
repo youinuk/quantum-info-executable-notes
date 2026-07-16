@@ -1,0 +1,55 @@
+\documentclass[11pt,openany]{book}
+\input{preamble/packages}
+\input{preamble/commands}
+\input{preamble/environments}
+
+\title{\booktitle\\[4pt]\large\booksubtitle}
+\author{AUTHOR NAME}
+\date{Draft \today}
+
+\begin{document}
+\frontmatter
+\maketitle
+\input{frontmatter/abstract}
+\input{frontmatter/preface}
+\tableofcontents
+\input{frontmatter/notation}
+
+\mainmatter
+\part{Information, Probability, and Experiments}
+\include{chapters/ch01_bits_information}
+\include{chapters/ch02_one_result_distribution}
+
+\part{From Bits to Qubits}
+\include{chapters/ch03_qubit_state}
+\include{chapters/ch04_preparation_measurement}
+
+\part{Gates, Circuits, and Interference}
+\include{chapters/ch05_gates_circuits}
+\include{chapters/ch06_phase}
+\include{chapters/ch07_interference_computation}
+
+\part{More Than One Qubit}
+\include{chapters/ch08_two_qubits}
+\include{chapters/ch09_correlation_entanglement}
+\include{chapters/ch10_entanglement_limits}
+
+\part{Algorithms, Noise, and Real Tools}
+\include{chapters/ch11_deutsch}
+\include{chapters/ch12_noise_error}
+\include{sdk_labs/sdk01_qiskit_cirq}
+
+\appendix
+\include{appendices/app_a_complex_numbers}
+\include{appendices/app_b_vectors_matrices}
+\include{appendices/app_c_braket}
+\include{appendices/app_d_tensor_products}
+\include{appendices/app_e_density_matrices}
+\include{appendices/app_f_quantum_channels}
+\include{appendices/app_g_reproduction}
+\include{appendices/app_h_solutions}
+
+% Enable after the first verified citations are added:
+% \bibliographystyle{plainnat}
+% \bibliography{bibliography/references}
+\end{document}

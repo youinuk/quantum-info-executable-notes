@@ -1,0 +1,201 @@
+schema_version: 0.3.0
+project:
+  app_repository: https://github.com/youinuk/quantum-info-learning-lab
+  app_baseline_branch: main
+  app_baseline_commit: 9f7ef8ecc3853ed966a30e07775ed6e4370e4ffa
+  level9_12_addition_commit: b42f0ea729608f7e5b7325d62e4ba6c70b9b8dfa
+  manuscript_title: 'From Bits to Qubits: An Executable Introduction to Quantum Information'
+  primary_audience:
+  - high-school students
+  - undergraduates
+  - general readers
+  prerequisites:
+  - high-school mathematics
+  manuscript_language: English
+  baseline_note: Latest observed main commit is 9f7ef8e; Level 9--12 was added in b42f0ea.
+levels:
+- level: 0
+  level_id: L00
+  title_en: Bits and Probability
+  title_ko: 비트와 확률
+  status: public_main
+  page: pages/01_level0_bit_probability.py
+  lesson: content/lessons/{lang}/level0.md
+  book_chapters:
+  - ch01
+  - ch02
+  experiments:
+  - EXP-C01
+- level: 1
+  level_id: L01
+  title_en: Introduction to Qubits
+  title_ko: 큐비트 입문
+  status: public_main
+  page: pages/02_level1_qubit_placeholder.py
+  lesson: content/lessons/{lang}/level1.md
+  book_chapters:
+  - ch03
+  experiments:
+  - EXP-Q01
+- level: 2
+  level_id: L02
+  title_en: Measurement
+  title_ko: 측정
+  status: public_main
+  page: pages/03_level2_measurement.py
+  lesson: content/lessons/{lang}/level2.md
+  book_chapters:
+  - ch02
+  - ch04
+  experiments:
+  - EXP-Q02
+  - EXP-M01
+- level: 3
+  level_id: L03
+  title_en: Quantum Gates
+  title_ko: 양자 게이트
+  status: public_main
+  page: pages/04_level3_gates.py
+  lesson: content/lessons/{lang}/level3.md
+  book_chapters:
+  - ch05
+  experiments:
+  - EXP-G01
+  - EXP-G02
+  - EXP-I01
+- level: 4
+  level_id: L04
+  title_en: Interference
+  title_ko: 간섭
+  status: public_main
+  page: pages/05_level4_interference.py
+  lesson: content/lessons/{lang}/level4.md
+  book_chapters:
+  - ch06
+  - ch07
+  experiments:
+  - EXP-I01
+  - EXP-I02
+- level: 5
+  level_id: L05
+  title_en: Two Qubits
+  title_ko: 두 큐비트
+  status: public_main
+  page: pages/06_level5_two_qubits.py
+  lesson: content/lessons/{lang}/level5.md
+  book_chapters:
+  - ch08
+  experiments:
+  - EXP-TQ01
+- level: 6
+  level_id: L06
+  title_en: Entanglement
+  title_ko: 얽힘
+  status: public_main
+  page: pages/07_level6_entanglement.py
+  lesson: content/lessons/{lang}/level6.md
+  book_chapters:
+  - ch09
+  experiments:
+  - EXP-ENT01
+- level: 7
+  level_id: L07
+  title_en: A Simple Quantum Algorithm
+  title_ko: 간단한 양자 알고리즘
+  status: public_main
+  page: pages/08_level7_algorithms.py
+  lesson: content/lessons/{lang}/level7.md
+  book_chapters:
+  - ch07
+  - ch11
+  experiments:
+  - EXP-ALG01
+- level: 8
+  level_id: L08
+  title_en: Noise and Error
+  title_ko: 노이즈와 오류
+  status: public_main
+  page: pages/09_level8_noise.py
+  lesson: content/lessons/{lang}/level8.md
+  book_chapters:
+  - ch12
+  experiments:
+  - EXP-N01
+- level: 9
+  level_id: L09
+  title_en: How to Read a Quantum Circuit
+  title_ko: 회로를 읽는 법
+  status: public_main
+  page: pages/11_level9_circuit_reading.py
+  lesson: content/lessons/{lang}/level9.md
+  book_chapters:
+  - ch05
+  - ch08
+  - ch11
+  experiments:
+  - EXP-CIR01
+  - EXP-CIR02
+- level: 10
+  level_id: L10
+  title_en: Measurement and Statistics
+  title_ko: 측정과 통계
+  status: public_main
+  page: pages/12_level10_measurement_statistics.py
+  lesson: content/lessons/{lang}/level10.md
+  book_chapters:
+  - ch02
+  - ch04
+  - ch12
+  experiments:
+  - EXP-STAT01
+  - EXP-STAT02
+- level: 11
+  level_id: L11
+  title_en: Interference in Greater Depth
+  title_ko: 간섭 심화
+  status: public_main
+  page: pages/13_level11_interference_depth.py
+  lesson: content/lessons/{lang}/level11.md
+  book_chapters:
+  - ch06
+  - ch07
+  experiments:
+  - EXP-I02
+  - EXP-I03
+- level: 12
+  level_id: L12
+  title_en: Entanglement and the Limits of Information
+  title_ko: 얽힘과 정보의 한계
+  status: public_main
+  page: pages/14_level12_entanglement_limits.py
+  lesson: content/lessons/{lang}/level12.md
+  book_chapters:
+  - ch09
+  - ch10
+  experiments:
+  - EXP-ENT02
+  - EXP-ENT03
+- level: 13
+  level_id: L13
+  title_en: The Reality of Errors and Correction
+  title_ko: 오류와 보정의 현실
+  status: planned
+  page: TBD_LEVEL13
+  lesson: content/lessons/{lang}/level13.md
+  book_chapters:
+  - ch12
+  experiments:
+  - EXP-EC01
+  - EXP-EC02
+- level: 14
+  level_id: L14
+  title_en: A First Look at Real Quantum Tools
+  title_ko: 실제 양자컴퓨터 사용 맛보기
+  status: planned
+  page: TBD_LEVEL14
+  lesson: content/lessons/{lang}/level14.md
+  book_chapters:
+  - sdk01
+  experiments:
+  - EXP-SDK01
+  - EXP-SDK02
