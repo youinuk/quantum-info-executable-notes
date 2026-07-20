@@ -31,12 +31,10 @@ Open \applevel{4} in the companion app. Before reading the explanation, run two 
   \item Circuit B: start with $\ketzero$, apply $H$, apply $Z$, apply $H$, and measure.
 \end{enumerate}
 
-For each circuit, predict whether the final result will be mostly 0, mostly 1, or roughly half 0 and half 1. Then run the circuits and compare your prediction with the result.
+For each circuit, predict whether the ideal simulator will return 0 every time, 1 every time, or 0 and 1 with equal probability. Then run the circuits and compare your prediction with the result.
 \end{tryit}
 
-The two circuits differ by only one middle gate, the $Z$ gate. This makes the example useful: if one small change flips the final result, then the middle gate must have changed something important.
-
-But the important thing is not visible if we measure too early.
+The two circuits differ by only one middle gate, the $Z$ gate, yet their final outcomes differ. The question is what the $Z$ gate changed. That change is not visible if we measure immediately after the middle step.
 
 \section{What the direct measurement misses}
 \label{sec:ch06-direct-measurement-misses}
@@ -57,7 +55,7 @@ If we measure $\ketminus$ directly in the usual 0/1 basis, we again get 0 with p
 
 This is the key surprise. The direct probabilities are the same, but the states are not the same. \Cref{fig:ch06-hidden-phase-concept} shows the difference. The probability view looks identical. The amplitude view shows the hidden relative sign.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.90\textwidth]{fig_ch06_hidden_phase_concept.pdf}
 \caption{The states $\ketplus$ and $\ketminus$ give the same direct 0/1 probabilities, but their amplitudes differ by a relative sign. A direct measurement in the 0/1 basis misses this sign difference. A later gate can make it visible.}
@@ -100,7 +98,7 @@ For the sign-based examples in this chapter, the amplitudes are real numbers. Th
 \label{eq:sign-squares}
 \end{equation}
 
-\Cref{tab:ch06-amplitude-probability} writes the same idea as a table. This is a table, not a figure, because its purpose is to compare exact symbolic values.
+\Cref{tab:ch06-amplitude-probability} compares the amplitudes and probabilities directly.
 
 \begin{table}[t]
 \centering
@@ -150,7 +148,7 @@ The state $\ketminus$ has a minus sign between the two parts:
 
 The important word is \emph{between}. The difference is not attached to the whole state. It is a relative difference between the $\ketzero$ part and the $\ketone$ part.
 
-A relative sign is the simplest case of a relative phase. Later, the sign will become a direction on a circle. For now, it is enough to remember this:
+A relative sign is the simplest case of a relative phase. More generally, relative phase is described by an angle: the plus and minus cases correspond to phase differences of $0$ and $\pi$. For now, it is enough to remember this:
 
 \begin{coreidea}
 A relative phase is information about how parts of a quantum state are arranged before they are recombined.
@@ -224,16 +222,16 @@ This is the key point: the final measurement does not simply reveal a hidden cla
 \section{A phase sweep: from bright to dark}
 \label{sec:ch06-phase-sweep}
 
-\applevel{11} generalizes the sign example. Instead of only using a plus sign or a minus sign, the app lets the learner choose a phase difference. The app then compares a bright output and a dark output.
+\applevel{11} generalizes the sign example. Instead of only using a plus sign or a minus sign, the app lets the learner choose a phase difference. It labels the two output ports as bright and dark. These are interferometer-style names; the qubit does not literally become brighter or darker.
 
-After the reader has seen the visual pattern, the simple model can be summarized as
+For an ideal balanced two-path interference experiment, the visual pattern is summarized by
 \begin{equation}
 P(\mathrm{bright})=\frac{1+\cos(\Delta\phi)}{2},
 \qquad
 P(\mathrm{dark})=1-P(\mathrm{bright}).
 \label{eq:bright-dark-probability}
 \end{equation}
-Here $\Delta\phi$ is the phase difference between two paths or two parts of the state. The formula is not the starting point of the lesson. The visual experiment should come first. The formula summarizes the pattern.
+Here $\Delta\phi$ is the phase difference between two paths or two parts of the state. The visual experiment shows the pattern first; the formula then summarizes it.
 
 \Cref{fig:ch06-phase-sweep} shows the pattern. At $0^\circ$, the bright output has probability 1. At $180^\circ$, the bright output has probability 0 and the dark output has probability 1. At $90^\circ$ and $270^\circ$, the two outputs are equally likely.
 
@@ -276,7 +274,7 @@ It is helpful to compare this with waves on water, sound waves, or light waves. 
 \label{fig:ch06-wave-analogy-limits}
 \end{figure}
 
-A quantum state is not simply a tiny water wave. The amplitudes describe probabilities for measurement outcomes, and the measurement produces one observed result in a single shot. We use the wave analogy only to understand the combining and canceling of amplitudes.
+The analogy is therefore limited. A quantum state is not a tiny water wave. The analogy concerns how amplitudes combine; a single measurement still gives one observed outcome.
 
 \begin{coreidea}
 The wave analogy helps explain addition and cancellation, but the quantum state is a probability-amplitude description, not an ordinary water wave.
@@ -287,7 +285,7 @@ The wave analogy helps explain addition and cancellation, but the quantum state 
 
 Quantum algorithms do not work merely by creating many possibilities. Creating many possibilities is only the beginning. The useful part is arranging amplitudes so that unhelpful outcomes cancel and useful patterns remain.
 
-The Deutsch algorithm is the first complete example in this book. The algorithm marks information about a function as a phase pattern. Then a final Hadamard gate converts that phase pattern into a measurable 0 or 1 on the first qubit \citep{deutsch1985quantumTheory}. This is the same lesson as $H H$ versus $H Z H$, but used for a computational question.
+Chapter 7 will generalize this phase-marking-and-recombination pattern. Chapter 11 will then present the Deutsch algorithm as the first complete algorithmic example. In that algorithm, an oracle places information about a function into a phase pattern, and a final Hadamard gate converts the pattern into a measurable 0 or 1 on the first qubit \citep{deutsch1985quantumTheory}. This is the same lesson as $H H$ versus $H Z H$, but used for a computational question.
 
 \begin{table}[t]
 \centering
@@ -328,11 +326,11 @@ Measure pattern & get 0 or 1 & classify constant or balanced \\
 
 There is one more distinction that prevents many mistakes.
 
-Multiplying the whole state by the same minus sign does not change the measurement probabilities:
+Multiplying the whole state by the same minus sign does not change any measurement prediction:
 \begin{equation}
 \ket{\psi}\quad\text{and}\quad -\ket{\psi}
 \end{equation}
-represent the same physical predictions in the simple experiments considered here. This is called a global phase.
+represent the same physical state. The minus sign is then a global phase.
 
 By contrast, changing the sign of only one part changes a relative phase:
 \begin{equation}
@@ -341,7 +339,7 @@ By contrast, changing the sign of only one part changes a relative phase:
 \frac{\ketzero-\ketone}{\sqrt{2}}.
 \end{equation}
 
-The $H Z H$ experiment is sensitive to this relative difference. The distinction between global and relative phase is standard in quantum mechanics and quantum information \citep{nielsenChuang2010,mermin2007quantumComputerScience}.
+The $H Z H$ experiment is sensitive to this relative difference. A relative phase can affect interference; a global phase cannot. The distinction between global and relative phase is standard in quantum mechanics and quantum information \citep{nielsenChuang2010,mermin2007quantumComputerScience}.
 
 \begin{goingdeeper}
 A general one-qubit state can be written as
@@ -383,7 +381,7 @@ The Deutsch algorithm chapter will use these ideas in a complete circuit.
   \item Explain why $\ketplus$ and $\ketminus$ have the same direct 0/1 measurement probabilities.
   \item In the state $(\ketzero-\ketone)/\sqrt{2}$, where is the relative sign?
   \item Explain in one or two sentences why the $Z$ gate can matter even though it does not change the immediate 0/1 probabilities of $\ketplus$.
-  \item Use $P(\mathrm{bright})=(1+\cos\Delta\phi)/2$ to compute the bright probability for $0^\circ$, $90^\circ$, $180^\circ$, and $270^\circ$.
+  \item Use $P(\mathrm{bright})=(1+\cos\Delta\phi)/2$ to compute the bright probability for phase differences of $0^\circ$, $90^\circ$, $180^\circ$, and $270^\circ$.
   \item Give an example of two states that differ by a global minus sign. Explain why this does not change direct measurement probabilities.
   \item Suppose a student says, ``If the probability is $1/2$ for both outcomes, then the sign cannot matter.'' Use the $H Z H$ circuit to correct this statement.
   \item In your own words, explain why \Cref{fig:ch06-phase-sweep} is a phase experiment rather than a simple coin-flip experiment.

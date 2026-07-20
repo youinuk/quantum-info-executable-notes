@@ -1,64 +1,379 @@
 \chapter[Interference and Computation]{Interference as a Computational Tool}
-\label{chap:interference-as-a-computational-tool}
+\label{chap:interference-computation}
 
 \begin{learningobjectives}
+By the end of this chapter, the reader should be able to:
 \begin{itemize}
-  \item Explain constructive and destructive interference.
-  \item Trace how an algorithm suppresses and enhances outcomes.
-  \item Connect phase marking to a measurable final result.
+  \item describe the four-step pattern prepare, phase mark, recombine, and measure;
+  \item distinguish phase marking from storing two readable function values;
+  \item explain how equal and opposite phase markers produce different final outcomes;
+  \item calculate the final amplitudes using a sum and a difference;
+  \item explain why useful interference requires circuit design rather than superposition alone;
+  \item distinguish the effective one-qubit phase-marking model from the full two-qubit oracle introduced in Chapter 11.
 \end{itemize}
 \end{learningobjectives}
 
 \begin{openingquestion}
-Why is creating many possibilities not enough for a quantum algorithm?
+How can a quantum circuit turn a hidden relationship into one reliable measurement result?
 \end{openingquestion}
 
-\paragraph{App and experiment mapping.}
-Primary app material: \applevel{4}, \applevel{7}, \applevel{11}. Reproducible experiment IDs:
-\experiment{EXP-I01, EXP-I02, EXP-ALG01}.
+\paragraph{Companion app.}
+This chapter uses \applevel{7}, A Simple Quantum Algorithm, together with the interference ideas from \applevel{4} and \applevel{11}. Level 7 has four learning tabs: the presentation frames the problem and the two qubit roles, the simulation exposes phase markers and circuit stages, the resources widen the context, and the quiz checks the central distinctions. This chapter develops the common computational pattern; Chapter 11 will derive the full two-qubit oracle.
 
-\section{Try it first}
+\begin{appactivity}[Companion app pathway]
+\begin{enumerate}
+  \item \textbf{Presentation:} read cards 1--4 and state the different jobs of the classification qubit and helper qubit.
+  \item \textbf{Simulation:} hide the truth table, run Oracles A--D, and compare phase markers with the final first-qubit result.
+  \item \textbf{Resources:} open one Level 7 item and record one idea or representation it adds.
+  \item \textbf{Quiz:} complete it after Section~\ref{sec:ch07-app-stages}; revisit the relevant card or section after each error.
+\end{enumerate}
+\end{appactivity}
+
+\section{Try it first: group the hidden oracles}
+\label{sec:ch07-try-first}
+
 \begin{tryit}
-\placeholder{Insert a short app procedure using the experiment registry. Include
-the initial settings, what the learner changes, and what should be recorded before
-the explanation is revealed.}
+Open the \textbf{Simulation} tab in \applevel{7}. Do not open the truth-table reveal at first.
+
+Run Oracle A, B, C, and D. For each oracle, record:
+\begin{enumerate}
+  \item whether the two displayed phase markers are the same or opposite;
+  \item whether the final first-qubit result is 0 or 1;
+  \item the classification shown by the app.
+\end{enumerate}
+
+Then group the four oracles into two pairs. What feature is shared by the two oracles in each pair?
 \end{tryit}
 
-\section{What happened?}
-\placeholder{Describe the visible result without yet introducing unnecessary formalism.}
+Although there are four hidden rules, the circuit produces only two possible classifications. When the two phase markers match, the first qubit finishes at 0. When they are opposite, it finishes at 1.
 
-\section{The main idea}
-\begin{coreidea}
-\placeholder{State one central claim in plain language.}
-\end{coreidea}
+The result is not revealing the two hidden function values separately. It is revealing a relationship between them.
 
-\section{The mathematics}
-\placeholder{Introduce only the mathematics needed for this chapter, defining every symbol.}
-
-\section{Connecting the mathematics and the code}
-\placeholder{Map mathematical objects to tested simulator functions and generated figures.
-Do not paste the full Streamlit page implementation into the manuscript.}
-
-\section{Common misconceptions}
-\begin{misconception}
-\placeholder{State a common incorrect interpretation, explain why it fails, and provide
-a counterexample from the app.}
-\end{misconception}
-
-\section{Check your understanding}
 \begin{checkpoint}
+\textbf{Quick check 7.1}
 \begin{enumerate}
-  \item \placeholder{Prediction question}
-  \item \placeholder{Short calculation}
-  \item \placeholder{Interpretation of a graph or circuit}
+  \item Which final result corresponds to matching phase markers?
+  \item Which final result corresponds to opposite phase markers?
+  \item Does the final bit tell us both hidden function values individually?
 \end{enumerate}
 \end{checkpoint}
 
-\section{Going deeper}
+\section{From two hidden values to one property}
+\label{sec:ch07-one-property}
+
+Consider a Boolean function with one-bit input and one-bit output:
+\begin{equation}
+f:\{0,1\}\longrightarrow\{0,1\}.
+\label{eq:ch07-boolean-function}
+\end{equation}
+There are two inputs, so the hidden rule contains two values: $f(0)$ and $f(1)$.
+
+For this chapter, the goal is not to learn both values. The goal is to decide whether they are the same or different:
+\begin{align}
+\text{constant:}  &\qquad f(0)=f(1), \\
+\text{balanced:}  &\qquad f(0)\ne f(1).
+\end{align}
+For a one-bit input, these are the only two possibilities. In this small case, balanced means that one output is 0 and the other is 1.
+
+This is a property of the pair $(f(0),f(1))$. A useful circuit can be designed to make that property visible without making each value separately readable.
+
+\begin{coreidea}
+A quantum algorithm can be designed to reveal a relation among hidden values rather than reveal the values one by one.
+\end{coreidea}
+
+\section{The algorithmic pattern}
+\label{sec:ch07-pattern}
+
+The pattern used in this chapter has four steps:
+\begin{enumerate}
+  \item \textbf{Prepare} equal amplitudes for the two input labels.
+  \item \textbf{Mark} each label with a sign that depends on the hidden function.
+  \item \textbf{Recombine} the marked amplitudes with a Hadamard gate.
+  \item \textbf{Measure} which relation survived the interference.
+\end{enumerate}
+
+\Cref{fig:ch07-algorithmic-pipeline} summarizes these four steps as an abstract information-processing pattern. Superposition is only the preparation step. The computational result appears only after phase marking and recombination.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{fig_ch07_algorithmic_pipeline.pdf}
+\caption{The basic computational pattern developed in this chapter. Equal amplitudes are prepared, a hidden rule marks their relative signs, and a final Hadamard converts the sign relation into a measurable output bit.}
+\label{fig:ch07-algorithmic-pipeline}
+\end{figure}
+
+This pattern is already visible in the Chapter 6 comparison between $H H$ and $H Z H$. Chapter 7 gives the middle sign change a computational meaning: it represents a property of a hidden rule.
+
+\begin{checkpoint}
+\textbf{Quick check 7.2}
+\begin{enumerate}
+  \item Which step creates the two input possibilities?
+  \item Which step places information into their relative signs?
+  \item Why is measurement performed after recombination rather than immediately after phase marking?
+\end{enumerate}
+\end{checkpoint}
+
+\section{Phase marking without readable answers}
+\label{sec:ch07-phase-marking}
+
+After the preparation step, the first qubit is
+\begin{equation}
+\ketplus=\frac{\ketzero+\ketone}{\sqrt{2}}.
+\end{equation}
+
+Instead of making the two function values directly readable, the oracle lets each value control a sign marker:
+\begin{equation}
+s_x=(-1)^{f(x)},\qquad s_x\in\{+1,-1\}.
+\label{eq:ch07-sign-marker}
+\end{equation}
+If $f(x)=0$, then $s_x=+1$. If $f(x)=1$, then $s_x=-1$.
+
+After phase marking, the state has the form
+\begin{equation}
+\ket{\psi_{\mathrm{marked}}}
+=\frac{s_0\ketzero+s_1\ketone}{\sqrt{2}}.
+\label{eq:ch07-marked-state}
+\end{equation}
+
+A direct 0/1 measurement of this state still gives probability $1/2$ for each outcome. Squaring an amplitude removes its sign. The hidden property is therefore not yet visible in the probabilities.
+
+\Cref{tab:ch07-marker-patterns} lists the four possible functions. Notice that the circuit needs only the relation between the two signs.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{cccccc}
+\toprule
+$f(0)$ & $f(1)$ & $s_0$ & $s_1$ & Sign relation & Property \\
+\midrule
+0 & 0 & $+1$ & $+1$ & same & constant \\
+1 & 1 & $-1$ & $-1$ & same & constant \\
+0 & 1 & $+1$ & $-1$ & opposite & balanced \\
+1 & 0 & $-1$ & $+1$ & opposite & balanced \\
+\bottomrule
+\end{tabular}
+\caption{The individual function values control sign markers. Matching signs represent a constant function, while opposite signs represent a balanced function.}
+\label{tab:ch07-marker-patterns}
+\end{table}
+
+The patterns $(+1,+1)$ and $(-1,-1)$ differ only by an overall minus sign. They therefore represent the same relative pattern. Likewise, $(+1,-1)$ and $(-1,+1)$ differ by an overall minus sign but share the same opposite-sign relation.
+
+\begin{appactivity}[Return to the app: compare phase markers]
+In the \textbf{Simulation} tab, run one constant oracle and one balanced oracle. Compare the probability row labeled ``After oracle'' with the phase-marker table. Confirm that the probabilities can remain 50--50 even though the sign relation has changed.
+\end{appactivity}
+
+\begin{misconception}
+\textbf{Incorrect statement:} ``The oracle stores $f(0)$ in the $\ketzero$ part and $f(1)$ in the $\ketone$ part so that both answers can later be read.''
+
+\medskip
+\textbf{Correction:} The marked state does not contain two separately readable answer boxes. The function values control relative signs. A later interference step can reveal a property of the sign pattern, but measurement does not print both values.
+\end{misconception}
+
+\begin{checkpoint}
+\textbf{Quick check 7.3}
+\begin{enumerate}
+  \item What sign marker corresponds to $f(x)=0$?
+  \item What sign marker corresponds to $f(x)=1$?
+  \item Why do the states with markers $(+1,+1)$ and $(-1,-1)$ lead to the same classification?
+\end{enumerate}
+\end{checkpoint}
+
+\section{The final Hadamard as a sum-and-difference step}
+\label{sec:ch07-sum-difference}
+
+The final Hadamard does not read the two markers separately. It mixes them into two new amplitudes: a sum for output 0 and a difference for output 1. Applying $H$ to the marked state in \Cref{eq:ch07-marked-state} gives:
+\begin{align}
+H\ket{\psi_{\mathrm{marked}}}
+&=\frac{1}{\sqrt{2}}\left(s_0H\ketzero+s_1H\ketone\right) \\
+&=\frac{1}{2}\left[
+(s_0+s_1)\ketzero+(s_0-s_1)\ketone
+\right].
+\label{eq:ch07-sum-difference}
+\end{align}
+
+The second line is the key step. It creates two output channels:
+\begin{align}
+\text{amplitude for 0} &= \frac{s_0+s_1}{2}, \\
+\text{amplitude for 1} &= \frac{s_0-s_1}{2}.
+\end{align}
+
+\Cref{fig:ch07-sum-difference} shows the two channels. Output 0 receives the sum of the markers. Output 1 receives their difference.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.94\textwidth]{fig_ch07_sum_difference_channels.pdf}
+\caption{The final Hadamard acts as a sum-and-difference step. Equal signs reinforce output 0 and cancel output 1. Opposite signs cancel output 0 and reinforce output 1.}
+\label{fig:ch07-sum-difference}
+\end{figure}
+
+If the signs are the same, then $s_0-s_1=0$. The output-1 amplitude cancels, while the output-0 amplitude has magnitude 1. Measurement gives 0.
+
+If the signs are opposite, then $s_0+s_1=0$. The output-0 amplitude cancels, while the output-1 amplitude has magnitude 1. Measurement gives 1.
+
+The surviving amplitude may be $+1$ or $-1$. That overall sign is a global phase, so it does not change the measurement result.
+
+\begin{coreidea}
+The circuit converts equality of two phase markers into output 0 and inequality of the markers into output 1.
+\end{coreidea}
+
+\begin{checkpoint}
+\textbf{Quick check 7.4}
+\begin{enumerate}
+  \item Evaluate the output amplitudes when $(s_0,s_1)=(+1,+1)$.
+  \item Evaluate them when $(s_0,s_1)=(+1,-1)$.
+  \item Which mathematical operation detects matching signs: the sum or the difference?
+\end{enumerate}
+\end{checkpoint}
+
+\section{What the app stages are showing}
+\label{sec:ch07-app-stages}
+
+The stage table in \applevel{7} can now be read as a sequence of information formats.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{p{0.22\textwidth}p{0.27\textwidth}p{0.40\textwidth}}
+\toprule
+Circuit stage & First-qubit probabilities & What carries the useful information \\
+\midrule
+Start & 100\% for 0 & no classification information yet \\
+After preparation & 50\% for 0, 50\% for 1 & equal input amplitudes \\
+After the oracle & still 50\% and 50\% & same or opposite phase markers \\
+After the final $H$ & 100\% for either 0 or 1 & the sign relation has become measurable \\
+\bottomrule
+\end{tabular}
+\caption{The probabilities may remain unchanged while the information format changes. The final Hadamard converts the hidden phase relation into an output probability.}
+\label{tab:ch07-app-stages}
+\end{table}
+
+The oracle stage may appear quiet if we look only at probabilities. The important change is in the phase markers. The final $H$ is the decoding step that makes their relation visible.
+
+This also explains why measuring immediately after the oracle would be unhelpful. Such a measurement would return a random input label, 0 or 1, and would destroy the coherent relation needed for the final interference step.
+
+Now that the effective phase model and the sum-and-difference step are clear, we can place them inside the full two-qubit circuit used by the app. \Cref{fig:ch07-deutsch-circuit-overview} is a roadmap rather than a full derivation. The upper wire carries the classification result. The lower wire is a helper that allows the oracle to create the phase pattern. Chapter 11 will derive the helper-qubit mechanism and the operation inside the oracle box.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.97\textwidth]{fig_ch07_deutsch_circuit_overview.pdf}
+\caption{Roadmap of the two-qubit Deutsch circuit. Both qubits are prepared, the oracle is queried once, and only the first qubit is recombined and measured for the classification. The helper-qubit mechanism is previewed here and derived in Chapter 11.}
+\label{fig:ch07-deutsch-circuit-overview}
+\end{figure}
+
+\begin{appactivity}[Return to the app: connect the explanation, circuit, resources, and quiz]
+\begin{enumerate}
+  \item In the \textbf{Presentation} tab, use cards 3--5 to locate the two qubits, the oracle, the final Hadamard, and the measurement in \Cref{fig:ch07-deutsch-circuit-overview}. Identify which wire is measured and which acts as the helper.
+  \item Reread cards 6--8 and compare their wording with \Cref{tab:ch07-app-stages}.
+  \item In the \textbf{Resources} tab, open one item and note whether it emphasizes the circuit, the oracle-query idea, or phase kickback.
+  \item Complete the \textbf{Quiz}. When an answer is wrong, identify whether the confusion concerns probability, phase, the oracle, or measurement.
+\end{enumerate}
+\end{appactivity}
+
+\begin{misconception}
+\textbf{Incorrect statement:} ``If the probabilities do not change after the oracle, the oracle has not done useful work.''
+
+\medskip
+\textbf{Correction:} The oracle can change relative phase without changing immediate probabilities. The useful change becomes visible only after the amplitudes are recombined.
+\end{misconception}
+
+\section{Why this is computation}
+\label{sec:ch07-why-computation}
+
+A computation need not reproduce every hidden intermediate value. It must transform the available information into the specific output the problem asks for.
+
+Here the requested output is one bit:
+\begin{equation}
+\text{output}=
+\begin{cases}
+0, & f(0)=f(1),\\
+1, & f(0)\ne f(1).
+\end{cases}
+\end{equation}
+The circuit has been designed so that interference performs exactly this transformation.
+
+This is more precise than saying that the computer ``tries both inputs at once.'' Superposition makes both input labels available to the oracle, but phase marking and recombination determine what can actually be learned at measurement.
+
+\begin{coreidea}
+Quantum computation is controlled transformation of amplitudes. Superposition provides possibilities; phase marking organizes them; interference converts the organization into an observable result.
+\end{coreidea}
+
+\section{What is postponed until Chapter 11}
+\label{sec:ch07-postponed}
+
+The app previews the complete two-qubit circuit, but the mathematical development in this chapter treats phase marking as an effective operation on the first qubit:
+\begin{equation}
+\ket{x}\longmapsto (-1)^{f(x)}\ket{x}.
+\label{eq:ch07-effective-phase-oracle}
+\end{equation}
+This lets us study the computational role of phase without introducing the full two-qubit mechanism too early.
+
+Chapter 11 will explain:
+\begin{itemize}
+  \item why the standard oracle is written as $U_f\ket{x}\ket{y}=\ket{x}\ket{y\oplus f(x)}$;
+  \item why the helper qubit begins in $\ketone$ and is changed to $\ketminus$;
+  \item how phase kickback produces the effective sign $(-1)^{f(x)}$;
+  \item what ``one oracle query'' means in the query model;
+  \item the precise classical comparison and its limitations.
+\end{itemize}
+
+This division is deliberate. The app gives an early visual preview, Chapter 7 explains the algorithmic skeleton, and Chapter 11 supplies the full derivation and the query-complexity statement.
+
+\section{Going deeper: the matrix shortcut}
+\label{sec:ch07-going-deeper}
+
 \begin{goingdeeper}
-\placeholder{Optional mathematical treatment. The core chapter must remain readable if
-this box is skipped.}
+The effective phase-marking operation can be written as
+\begin{equation}
+D_f=
+\begin{pmatrix}
+s_0 & 0\\
+0 & s_1
+\end{pmatrix}.
+\end{equation}
+
+For a constant function, $s_0=s_1$, so $D_f$ is either $I$ or $-I$. These differ only by global phase. Therefore
+\begin{equation}
+H D_f H\ketzero \sim \ketzero.
+\end{equation}
+
+For a balanced function, $s_0=-s_1$, so $D_f$ is either $Z$ or $-Z$. Up to global phase,
+\begin{equation}
+H D_f H\ketzero \sim H Z H\ketzero=\ketone.
+\end{equation}
+
+The symbol $\sim$ means equality up to an overall global phase. This matrix shortcut connects the computational classification directly to the $H H$ and $H Z H$ experiments from Chapter 6.
 \end{goingdeeper}
 
+\section{Chapter summary}
+\label{sec:ch07-summary}
+
+The main ideas of this chapter are:
+\begin{itemize}
+  \item A useful algorithm must do more than create a superposition.
+  \item A hidden function can mark input components with relative signs.
+  \item Direct measurement after phase marking does not reveal the sign relation.
+  \item A final Hadamard forms a sum channel and a difference channel.
+  \item Matching signs produce output 0; opposite signs produce output 1.
+  \item The output reveals a property of the hidden values, not both values separately.
+  \item The full two-qubit Deutsch oracle and query-model comparison are deferred to Chapter 11.
+\end{itemize}
+
+\section{End-of-chapter exercises}
+\label{sec:ch07-exercises}
+
+Complete the Level 7 app quiz first. Then use the exercises below for written explanations and calculations that go beyond the multiple-choice format.
+
+\begin{enumerate}
+  \item Put the following steps in the correct order: measure, phase mark, prepare, recombine.
+  \item For $f(0)=0$ and $f(1)=0$, find $(s_0,s_1)$ and the final output.
+  \item Repeat for $f(0)=1$ and $f(1)=1$. Why is the final classification unchanged?
+  \item For $(s_0,s_1)=(-1,+1)$, compute $(s_0+s_1)/2$ and $(s_0-s_1)/2$.
+  \item Explain why measuring the marked state directly gives no information about whether the signs are same or opposite.
+  \item A learner says, ``The oracle probabilities are still 50--50, so the oracle did nothing.'' Correct the statement.
+  \item Explain why output 0 represents equality of the markers and output 1 represents inequality.
+  \item What information is deliberately not obtained by this circuit?
+  \item In one paragraph, distinguish superposition, phase marking, and interference.
+  \item Optional: use matrix multiplication to verify $H Z H=X$.
+\end{enumerate}
+
 \section{Further reading}
-\placeholder{Add primary or authoritative references after the literature matrix is built.}
+\label{sec:ch07-further-reading}
+
+Deutsch's original quantum-computation paper introduced the small oracle problem that motivates the pattern used here \citep{deutsch1985quantumTheory}. Standard textbook treatments place this example within the broader theory of quantum circuits, phase, and interference \citep{nielsenChuang2010,mermin2007quantumComputerScience}. The Level 7 resource tab provides additional routes into the same ideas. Chapter 11 will return to the original problem with the complete two-qubit circuit.

@@ -2,63 +2,359 @@
 \label{chap:two-qubits-and-a-growing-state-space}
 
 \begin{learningobjectives}
+By the end of this chapter, the reader should be able to:
 \begin{itemize}
-  \item List the four two-qubit basis states.
-  \item Compute independent joint probabilities.
-  \item Explain the growth from 2 to $2^n$ basis states without claiming all values can be read at once.
+  \item list and interpret the four two-qubit basis states;
+  \item calculate a joint distribution for two independently prepared qubits;
+  \item recover each qubit's individual probability from a joint distribution;
+  \item explain why $n$ qubits require $2^n$ basis labels;
+  \item read a two-line circuit from left to right and distinguish local gates from connecting gates;
+  \item explain why a large state space does not mean that all basis labels can be read in one measurement.
 \end{itemize}
 \end{learningobjectives}
 
 \begin{openingquestion}
-What changes when a second qubit is added?
+What changes when a second qubit is added: the number of qubits, the number of possible measurement labels, or both?
 \end{openingquestion}
 
-\paragraph{App and experiment mapping.}
-Primary app material: \applevel{5}, \applevel{9}. Reproducible experiment IDs:
-\experiment{EXP-TQ01, EXP-CIR01}.
+\paragraph{Companion app.}
+This chapter uses \applevel{5}, Two Qubits, and selected material from \applevel{9}, Reading Quantum Circuits. Level 5 develops the four outcomes and their probabilities. Level 9 shows how two qubits are represented as two horizontal circuit lines. The app's presentation cards, simulation, resources, and quiz are used at different points rather than treating the simulation as the whole lesson.
 
-\section{Try it first}
+\begin{appactivity}[Companion app pathway]
+\begin{enumerate}
+  \item \textbf{Level 5 presentation:} inspect the four-outcome diagram and explain what the first and second digits mean.
+  \item \textbf{Level 5 simulation:} choose the probability of measuring 1 for each qubit, predict the four outcomes, and then run the calculation.
+  \item \textbf{Level 5 resources and quiz:} open one resource after Section~\ref{sec:ch08-state-space-growth}, then complete the quiz before the end-of-chapter exercises.
+  \item \textbf{Level 9 presentation and simulation:} after Section~\ref{sec:ch08-circuit-reading}, read one two-qubit circuit before running it. Use the SDK preview only after the diagram itself makes sense.
+\end{enumerate}
+\end{appactivity}
+
+\section{Try it first: one pair, four possible results}
+\label{sec:ch08-try-first}
+
 \begin{tryit}
-\placeholder{Insert a short app procedure using the experiment registry. Include
-the initial settings, what the learner changes, and what should be recorded before
-the explanation is revealed.}
+Open the \textbf{Simulation} tab in \applevel{5}. Set the first qubit's probability of 1 to $1/2$ and the second qubit's probability of 1 to $1/4$.
+
+Before pressing Run, predict:
+\begin{enumerate}
+  \item the four possible two-qubit results;
+  \item which results should have the same probability;
+  \item the probability of the result 11.
+\end{enumerate}
+
+Run the calculation and record the four probabilities. Then change only the second qubit. Which entries in the four-outcome table change?
 \end{tryit}
 
-\section{What happened?}
-\placeholder{Describe the visible result without yet introducing unnecessary formalism.}
+The app shows four labels rather than two: 00, 01, 10, and 11. This does not mean that four qubits are present. It means that one measurement reports one bit from the first qubit and one bit from the second qubit.
 
-\section{The main idea}
-\begin{coreidea}
-\placeholder{State one central claim in plain language.}
-\end{coreidea}
+\section{Four basis states for two qubits}
+\label{sec:ch08-four-basis-states}
 
-\section{The mathematics}
-\placeholder{Introduce only the mathematics needed for this chapter, defining every symbol.}
+A single qubit has two standard basis states, $\ketzero$ and $\ketone$. Two qubits have four combinations:
+\begin{equation}
+\ket{00},\qquad \ket{01},\qquad \ket{10},\qquad \ket{11}.
+\label{eq:ch08-four-basis-states}
+\end{equation}
 
-\section{Connecting the mathematics and the code}
-\placeholder{Map mathematical objects to tested simulator functions and generated figures.
-Do not paste the full Streamlit page implementation into the manuscript.}
+In the label $\ket{01}$, the first digit belongs to the first qubit and the second digit belongs to the second qubit. \Cref{fig:ch08-four-basis-states} organizes the four labels as a two-by-two grid.
 
-\section{Common misconceptions}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.91\textwidth]{fig_ch08_four_basis_states.pdf}
+\caption{The four standard basis states of two qubits. The first digit records the first qubit's measurement result, and the second digit records the second qubit's result.}
+\label{fig:ch08-four-basis-states}
+\end{figure}
+
+A measurement of the pair produces one of these four two-bit strings. For example, 10 means that the first qubit was measured as 1 and the second as 0.
+
 \begin{misconception}
-\placeholder{State a common incorrect interpretation, explain why it fails, and provide
-a counterexample from the app.}
+\textbf{Incorrect statement:} ``The four labels 00, 01, 10, and 11 mean that the system has four qubits.''
+
+\medskip
+\textbf{Correction:} The system has two qubits. Four is the number of possible standard-basis outcomes for the pair.
 \end{misconception}
 
-\section{Check your understanding}
 \begin{checkpoint}
+\textbf{Quick check 8.1}
 \begin{enumerate}
-  \item \placeholder{Prediction question}
-  \item \placeholder{Short calculation}
-  \item \placeholder{Interpretation of a graph or circuit}
+  \item In the outcome 01, what was measured on the first qubit? On the second?
+  \item List the four possible results of measuring two qubits.
+  \item How many bits are written in each result label?
 \end{enumerate}
 \end{checkpoint}
 
-\section{Going deeper}
+\section{Independent qubits and the product rule}
+\label{sec:ch08-independent-probabilities}
+
+Let
+\begin{equation}
+p=P(\text{first qubit}=1),\qquad
+q=P(\text{second qubit}=1).
+\label{eq:ch08-p-q-definitions}
+\end{equation}
+Then the probabilities of 0 are $1-p$ and $1-q$.
+
+If the two qubits are prepared independently, the probability of a joint outcome is found by multiplying the probability for the first digit by the probability for the second digit. \Cref{fig:ch08-probability-tree} shows this as a branching process.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{fig_ch08_independent_probability_tree.pdf}
+\caption{A probability tree for two independently prepared qubits. Each final branch corresponds to one joint outcome, and its probability is the product of the two branch probabilities.}
+\label{fig:ch08-probability-tree}
+\end{figure}
+
+The four probabilities are summarized in \Cref{tab:ch08-independent-joint-probabilities}.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{ccc}
+\toprule
+Outcome & Meaning & Probability for independent qubits \\
+\midrule
+00 & first is 0, second is 0 & $(1-p)(1-q)$ \\
+01 & first is 0, second is 1 & $(1-p)q$ \\
+10 & first is 1, second is 0 & $p(1-q)$ \\
+11 & first is 1, second is 1 & $pq$ \\
+\bottomrule
+\end{tabular}
+\caption{The joint probabilities for two independently prepared qubits.}
+\label{tab:ch08-independent-joint-probabilities}
+\end{table}
+
+For the app settings $p=1/2$ and $q=1/4$,
+\begin{align}
+P(00)&=\frac{1}{2}\cdot\frac{3}{4}=\frac{3}{8}, &
+P(01)&=\frac{1}{2}\cdot\frac{1}{4}=\frac{1}{8},\\
+P(10)&=\frac{1}{2}\cdot\frac{3}{4}=\frac{3}{8}, &
+P(11)&=\frac{1}{2}\cdot\frac{1}{4}=\frac{1}{8}.
+\end{align}
+The four values add to 1, as every run must end in exactly one of the four outcomes.
+
+\begin{coreidea}
+For independent qubits, joint probabilities factor into one probability from the first qubit and one from the second.
+\end{coreidea}
+
+\begin{checkpoint}
+\textbf{Quick check 8.2}
+\begin{enumerate}
+  \item If $p=3/4$ and $q=1/2$, what is $P(11)$?
+  \item Which two joint outcomes include the first qubit result 1?
+  \item Why must the four joint probabilities add to 1?
+\end{enumerate}
+\end{checkpoint}
+
+\section{A joint distribution describes the pair}
+\label{sec:ch08-joint-distribution}
+
+The list
+\begin{equation}
+\bigl(P(00),P(01),P(10),P(11)\bigr)
+\end{equation}
+is called a \emph{joint distribution}. It describes the two results together rather than describing either qubit alone.
+
+We can recover the probability for one qubit by adding the joint outcomes that contain the result we want. For the first qubit,
+\begin{align}
+P(\text{first}=0)&=P(00)+P(01),\\
+P(\text{first}=1)&=P(10)+P(11).
+\end{align}
+For the second qubit,
+\begin{align}
+P(\text{second}=0)&=P(00)+P(10),\\
+P(\text{second}=1)&=P(01)+P(11).
+\end{align}
+
+For the independent formulas in \Cref{tab:ch08-independent-joint-probabilities}, these sums return the original values $p$ and $q$. For example,
+\begin{equation}
+P(\text{first}=1)=p(1-q)+pq=p.
+\end{equation}
+
+This distinction between the probability of each part and the joint probability of the pair will become essential in Chapters 9 and 10. Two systems can have similar individual probabilities but very different relationships between their paired outcomes.
+
+\begin{appactivity}[Return to Level 5: read the whole table]
+Choose unequal probabilities for the two qubits. Before changing a control, identify which two table entries contain the first-qubit result 1 and which two contain the second-qubit result 1. Change one control and explain why two or more joint entries move together.
+\end{appactivity}
+
+\begin{checkpoint}
+\textbf{Quick check 8.3}
+\begin{enumerate}
+  \item Which joint probabilities must be added to find $P(\text{second}=1)$?
+  \item Can two different joint distributions have the same probability for the first qubit alone?
+  \item What additional information does a joint distribution contain?
+\end{enumerate}
+\end{checkpoint}
+
+\section{From four probabilities to four amplitudes}
+\label{sec:ch08-two-qubit-state}
+
+Probabilities are not the complete quantum state. Chapter 6 showed that amplitude signs and phases can affect later interference. A general pure state of two qubits is therefore written with four amplitudes:
+\begin{equation}
+\ket{\psi}
+=\alpha_{00}\ket{00}
++\alpha_{01}\ket{01}
++\alpha_{10}\ket{10}
++\alpha_{11}\ket{11}.
+\label{eq:ch08-general-two-qubit-state}
+\end{equation}
+The corresponding standard-basis measurement probabilities are
+\begin{equation}
+P(ij)=|\alpha_{ij}|^2,
+\qquad ij\in\{00,01,10,11\},
+\label{eq:ch08-two-qubit-born-rule}
+\end{equation}
+and normalization requires
+\begin{equation}
+|\alpha_{00}|^2+|\alpha_{01}|^2+|\alpha_{10}|^2+|\alpha_{11}|^2=1.
+\end{equation}
+
+This notation does not mean that one measurement reveals four values. It means that four possible basis outcomes have amplitudes before measurement. One standard-basis measurement still produces one two-bit result. This is the usual two-qubit state description in quantum information \citep{nielsenChuang2010,mermin2007quantumComputerScience}.
+
 \begin{goingdeeper}
-\placeholder{Optional mathematical treatment. The core chapter must remain readable if
-this box is skipped.}
+If two pure qubit states are prepared separately,
+\begin{equation}
+\ket{a}=a_0\ketzero+a_1\ketone,
+\qquad
+\ket{b}=b_0\ketzero+b_1\ketone,
+\end{equation}
+then their joint state is the tensor product
+\begin{align}
+\ket{a}\otimes\ket{b}
+={}&a_0b_0\ket{00}+a_0b_1\ket{01}\\
+&+a_1b_0\ket{10}+a_1b_1\ket{11}.
+\label{eq:ch08-product-amplitudes}
+\end{align}
+The four amplitudes factor into one amplitude from each qubit. Not every two-qubit state can be written this way. Chapter 9 studies what happens when the two-qubit state cannot be separated into two individual state descriptions.
 \end{goingdeeper}
 
-\section{Further reading}
-\placeholder{Add primary or authoritative references after the literature matrix is built.}
+\section{Why the state space doubles}
+\label{sec:ch08-state-space-growth}
+
+Each qubit contributes two possible digits, 0 and 1. Adding one qubit therefore doubles the number of basis labels:
+\begin{table}[H]
+\centering
+\begin{tabular}{ccl}
+\toprule
+Number of qubits & Number of basis states & Example labels \\
+\midrule
+1 & $2$ & 0, 1 \\
+2 & $4$ & 00, 01, 10, 11 \\
+3 & $8$ & 000 through 111 \\
+4 & $16$ & 0000 through 1111 \\
+$n$ & $2^n$ & all binary strings of length $n$ \\
+\bottomrule
+\end{tabular}
+\caption{Every added qubit doubles the number of standard basis states.}
+\label{tab:ch08-state-space-growth}
+\end{table}
+
+For $n$ qubits, a standard basis label is an $n$-bit string. There are $2^n$ such strings. This rapid growth is one reason that describing large quantum systems becomes difficult on a classical computer \citep{preskill1998lectureNotes,nielsenChuang2010}.
+
+But the size of the state description must not be confused with the amount of information obtained from one measurement.
+
+\begin{misconception}
+\textbf{Incorrect statement:} ``Because an $n$-qubit state has $2^n$ amplitudes, one measurement reads all $2^n$ values.''
+
+\medskip
+\textbf{Correction:} One standard-basis measurement returns one $n$-bit string. Quantum algorithms must use gates and interference to arrange the amplitudes so that a useful property becomes likely to appear in that limited output.
+\end{misconception}
+
+\begin{appactivity}[Use the Level 5 resources and quiz]
+Open one item in the \textbf{Resources} tab and note one way it explains state-space growth or joint probability. Then complete the Level 5 quiz. For every incorrect answer, return to the relevant presentation card or section of this chapter before trying again.
+\end{appactivity}
+
+\begin{checkpoint}
+\textbf{Quick check 8.4}
+\begin{enumerate}
+  \item How many basis states do five qubits have?
+  \item How many classical bits appear in one standard-basis result from five qubits?
+  \item Why do these two answers not contradict each other?
+\end{enumerate}
+\end{checkpoint}
+
+\section{Reading a two-qubit circuit}
+\label{sec:ch08-circuit-reading}
+
+A quantum circuit diagram is a timeline. Each horizontal line tracks one qubit. The left side is earlier, and the right side is later. A box on one line is a gate applied to that qubit at that point.
+
+\Cref{fig:ch08-circuit-reading} shows three important visual features. The $H$ and $X$ boxes are local gates because each acts on one wire. The connected control and target symbols represent one operation acting on the two-qubit system together. Measurement boxes appear near the end because they convert the quantum state into visible classical results.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.97\textwidth]{fig_ch08_two_line_circuit_reading.pdf}
+\caption{How to read a two-qubit circuit. Follow each wire from left to right. A box on one wire is a local gate, while a vertical connection indicates an operation involving both qubits.}
+\label{fig:ch08-circuit-reading}
+\end{figure}
+
+When two gate symbols are placed at the same horizontal position but are not connected, they represent separate operations at the same circuit stage. A visible connection between the wires has a different meaning: the operation depends on the two-qubit system as a whole.
+
+\begin{appactivity}[Return to Level 9: read before running]
+Open the \textbf{Presentation} tab in \applevel{9} and review the timeline rule and the two-line circuit card. Then choose a two-qubit circuit in the \textbf{Simulation} tab.
+
+Before pressing Run:
+\begin{enumerate}
+  \item identify the starting state of each wire;
+  \item read every gate from left to right;
+  \item mark which operations are local and which connect the wires;
+  \item predict which measurement labels are possible.
+\end{enumerate}
+
+After running it, compare the probability table and counts with the circuit diagram. Open the SDK preview last and match each code line to one part of the diagram rather than memorizing the code.
+\end{appactivity}
+
+\begin{checkpoint}
+\textbf{Quick check 8.5}
+\begin{enumerate}
+  \item What does one horizontal circuit line represent?
+  \item In which direction is a circuit normally read?
+  \item How can you tell that a gate connects two qubits rather than acting locally?
+\end{enumerate}
+\end{checkpoint}
+
+\section{What changes when the wires are connected?}
+\label{sec:ch08-connected-preview}
+
+Two independently prepared qubits begin with separate probability or amplitude descriptions. A connecting gate can change the joint state so that the relationship between the outcomes becomes important.
+
+A connecting gate does not automatically create entanglement for every input. For example, some definite input states remain definite product states after a controlled operation. Other inputs can produce a state that no longer separates into one state for the first qubit and one state for the second.
+
+Chapter 9 compares three cases carefully:
+\begin{itemize}
+  \item independently prepared qubits;
+  \item a classically correlated mixture;
+  \item an entangled Bell state.
+\end{itemize}
+The four measurement labels remain 00, 01, 10, and 11. What changes is the relationship among their amplitudes and probabilities.
+
+\begin{coreidea}
+Adding a second qubit creates four basis outcomes. Connecting the two qubits can make the relationship among those outcomes part of the state itself.
+\end{coreidea}
+
+\section{Chapter summary}
+\label{sec:ch08-summary}
+
+\begin{itemize}
+  \item Two qubits have four standard basis states: $\ket{00}$, $\ket{01}$, $\ket{10}$, and $\ket{11}$.
+  \item One measurement of two qubits produces one two-bit result.
+  \item For independently prepared qubits, joint probabilities are products of individual probabilities.
+  \item A joint distribution describes the pair and can contain more information than either individual distribution alone.
+  \item A general two-qubit pure state has four amplitudes whose squared magnitudes give the four standard-basis probabilities.
+  \item Each added qubit doubles the number of basis states, giving $2^n$ basis labels for $n$ qubits.
+  \item A two-line circuit is read from left to right; a connection between the lines indicates a joint operation.
+\end{itemize}
+
+\section{End-of-chapter exercises}
+\label{sec:ch08-exercises}
+
+\begin{enumerate}
+  \item Interpret the outcome 10 in words.
+  \item List the eight standard basis labels for three qubits.
+  \item Two independent qubits have $p=1/4$ and $q=3/4$. Calculate $P(00)$, $P(01)$, $P(10)$, and $P(11)$.
+  \item Check that your four probabilities in the previous problem add to 1.
+  \item A joint distribution is $(0.30,0.20,0.10,0.40)$ in the order 00, 01, 10, 11. Find the probability that the first qubit is 1 and the probability that the second qubit is 1.
+  \item Can the distribution in the previous problem come from independent qubits? Test whether $P(11)=P(\text{first}=1)P(\text{second}=1)$.
+  \item Explain the difference between ``four basis states'' and ``four qubits.''
+  \item How many basis states do eight qubits have? How many bits appear in one standard-basis measurement result?
+  \item A student says, ``A quantum computer with eight qubits reads 256 answers in one measurement.'' Correct the statement.
+  \item Draw a two-line circuit with $H$ on the first qubit, $X$ on the second, and measurements at the end. Indicate the direction of time.
+  \item Explain how a vertical connection between two circuit lines differs from two separate gate boxes placed at the same horizontal position.
+  \item Optional: expand $(a_0\ketzero+a_1\ketone)\otimes(b_0\ketzero+b_1\ketone)$ and identify the amplitude of each basis state.
+\end{enumerate}
